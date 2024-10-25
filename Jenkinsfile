@@ -1,14 +1,14 @@
 pipeline {
     agent any
     tools {
-        jdk 'OpenJDK11'
-        maven 'Maven3'
+        jdk 'jdk11'
+        maven 'maven3'
     }
 
     stages {
         stage('SCM') {
             steps {
-                git changelog: false, poll: false, url: 'git@github.com:chittaranjan27/Devopsminiproject-two.git'
+                git changelog: false, poll: false, url: 'https://github.com/chittaranjan27/Devopsminiproject-two.git'
             }
         }
         stage('Maven Build') {
@@ -21,11 +21,11 @@ pipeline {
         stage('Docker Build & Push') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'aa12fd4c-6a73-43a6-82d3-5f917a65e9bd') {
+                    withDockerRegistry(credentialsId: 'dockerhub_id') {
                         
-                        bat "docker build -t abhishek0083/abhi:tag123 ."
+                        bat "docker build -t chittaranjan027/shopping:latest1 ."
                         
-                        bat "docker push abhishek0083/abhi:tag123"
+                        bat "docker push chittaranjan027/shopping:latest1"
                     }
                 }
             }
