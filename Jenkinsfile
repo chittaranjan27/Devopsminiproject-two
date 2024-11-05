@@ -8,24 +8,24 @@ pipeline {
     stages {
         stage('SCM') {
             steps {
-                git changelog: false, poll: false, url: 'https://github.com/chittaranjan27/Devopsminiproject-two.git'
+                git changelog: false, poll: false, url: 'https://github.com/chittaranjan27/Dockerminiproject.git'
             }
         }
         stage('Maven Build') {
             steps {
                 echo 'Running Maven build...'
-                
-                bat 'mvn clean install'  
+                // Execute Maven build
+                bat 'mvn clean install'  // Use 'sh' if on Linux/Mac
             }
         }
         stage('Docker Build & Push') {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'dockerhub_id') {
-                        
-                        bat "docker build -t chittaranjan027/shopping:latest1 ."
-                        
-                        bat "docker push chittaranjan027/shopping:latest1"
+                        // Build the Docker image
+                        bat "docker build -t chittaranjan027/miniproject:latest1 ."
+                        // Push the Docker image to Docker Hub
+                        bat "docker push chittaranjan027/miniproject:latest1"
                     }
                 }
             }
